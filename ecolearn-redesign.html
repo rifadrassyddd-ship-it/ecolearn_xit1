@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EcoLearn — ruang belajar interaktif untuk mengenal lingkungan dan memulai kebiasaan ramah bumi.">
+  <meta name="theme-color" content="#f5faf5">
+  <title>EcoLearn — Belajar untuk Bumi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root {
+      --green: #237a45;
+      --green-dark: #143c2a;
+      --green-bright: #9be36f;
+      --mint: #e8f4e8;
+      --cream: #f5faf5;
+      --ink: #173326;
+      --muted: #63766a;
+      --line: #dce8dc;
+      --white: #fff;
+      --shadow: 0 18px 50px rgba(24, 65, 41, .09);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body { font-family: "DM Sans", sans-serif; background: var(--cream); color: var(--ink); line-height: 1.7; }
+    img { display: block; width: 100%; object-fit: cover; }
+    a { color: inherit; }
+    button { font: inherit; }
+    .container { width: min(1160px, calc(100% - 44px)); margin-inline: auto; }
+    .topbar { position: fixed; inset: 0 0 auto; z-index: 1000; background: rgba(250, 253, 249, .9); border-bottom: 1px solid rgba(220,232,220,.8); backdrop-filter: blur(16px); }
+    .nav { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; color: var(--green); font-family: Manrope, sans-serif; font-weight: 800; font-size: 1.35rem; text-decoration: none; letter-spacing: -.7px; }
+    .brand-mark { display: grid; place-items: center; width: 39px; height: 39px; border-radius: 13px; color: white; background: var(--green); box-shadow: 0 8px 18px rgba(35,122,69,.22); }
+    .nav-links { display: flex; align-items: center; gap: 30px; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: .93rem; font-weight: 700; color: #425d4c; transition: color .2s; }
+    .nav-links a:hover { color: var(--green); }
+    .nav-cta, .button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 19px; border: 0; border-radius: 13px; background: var(--green); color: white; font-weight: 700; text-decoration: none; cursor: pointer; transition: transform .2s, background .2s, box-shadow .2s; }
+    .nav-cta:hover, .button:hover { background: #195f35; transform: translateY(-2px); box-shadow: 0 10px 22px rgba(35,122,69,.2); }
+    .menu-btn { display: none; width: 43px; height: 43px; border: 1px solid var(--line); background: white; color: var(--green); border-radius: 12px; cursor: pointer; }
+    .hero { position: relative; overflow: hidden; padding: 150px 0 88px; background: radial-gradient(ellipse at 82% 22%, #e2f3dc 0, transparent 31%), radial-gradient(ellipse at 10% 75%, #e5f1e4 0, transparent 34%), var(--cream); }
+    .hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: 64px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; padding: 7px 13px; border: 1px solid #d4e7d3; border-radius: 99px; background: #eff8ec; color: var(--green); font-size: .82rem; font-weight: 800; margin-bottom: 22px; }
+    .hero h1 { font: 800 clamp(2.7rem, 5.6vw, 5rem)/1.08 Manrope, sans-serif; letter-spacing: -3px; max-width: 650px; }
+    .hero h1 span { color: var(--green); }
+    .hero-copy { max-width: 570px; margin-top: 23px; color: var(--muted); font-size: 1.08rem; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+    .button-outline { background: white; color: var(--green); border: 1px solid var(--line); box-shadow: none; }
+    .button-outline:hover { color: white; }
+    .hero-note { display: flex; align-items: center; gap: 12px; margin-top: 30px; color: var(--muted); font-size: .88rem; }
+    .mini-leaves { display: flex; }
+    .mini-leaves span { width: 31px; height: 31px; display: grid; place-items: center; border: 2px solid var(--cream); border-radius: 50%; margin-left: -7px; color: var(--green); background: #d6edcc; }
+    .mini-leaves span:first-child { margin-left: 0; }
+    .hero-art { min-height: 450px; position: relative; }
+    .hero-photo { position: absolute; inset: 12px 25px 25px 25px; height: calc(100% - 37px); border-radius: 36px; overflow: hidden; box-shadow: 0 30px 70px rgba(27,70,42,.2); transform: rotate(2deg); }
+    .hero-photo img { height: 100%; }
+    .photo-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(10,38,22,.72)); }
+    .photo-label { position: absolute; bottom: 25px; left: 25px; right: 25px; color: white; }
+    .photo-label strong { display: block; font: 800 1.45rem Manrope, sans-serif; }
+    .photo-label span { color: #e1f0e3; font-size: .9rem; }
+    .floating-card { position: absolute; z-index: 2; padding: 15px 18px; border: 1px solid rgba(255,255,255,.7); border-radius: 18px; background: rgba(255,255,255,.94); box-shadow: var(--shadow); }
+    .floating-card.top { top: 0; left: 0; display: flex; align-items: center; gap: 12px; }
+    .floating-card.bottom { right: 0; bottom: 0; display: flex; align-items: center; gap: 12px; }
+    .floating-icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 13px; background: var(--mint); color: var(--green); font-size: 1.1rem; }
+    .floating-card strong { display: block; font: 800 1rem Manrope, sans-serif; }
+    .floating-card small { color: var(--muted); font-size: .77rem; }
+    .section { padding: 92px 0; }
+    .section-soft { background: #edf6eb; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 25px; margin-bottom: 34px; }
+    .section-kicker { color: var(--green); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.7px; }
+    .section-title { margin-top: 8px; font: 800 clamp(2rem, 4vw, 3rem)/1.2 Manrope, sans-serif; letter-spacing: -1.4px; }
+    .section-desc { max-width: 570px; color: var(--muted); margin-top: 11px; }
+    .section-aside { max-width: 270px; color: var(--muted); font-size: .9rem; }
+    .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+    .card { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: white; box-shadow: 0 8px 25px rgba(24,65,41,.035); transition: transform .25s, box-shadow .25s; }
+    .card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .card-image { position: relative; height: 210px; overflow: hidden; background: #dfece0; }
+    .card-image img { height: 100%; transition: transform .55s; }
+    .card:hover .card-image img { transform: scale(1.05); }
+    .card-tag { position: absolute; left: 15px; top: 15px; padding: 6px 10px; border-radius: 99px; color: var(--green-dark); background: rgba(255,255,255,.93); font-size: .73rem; font-weight: 800; }
+    .card-body { padding: 22px 23px 24px; }
+    .card-body h3 { font: 800 1.17rem Manrope, sans-serif; letter-spacing: -.35px; }
+    .card-body p { margin-top: 9px; color: var(--muted); font-size: .91rem; }
+    .card-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 17px; color: var(--green); text-decoration: none; font-size: .87rem; font-weight: 800; }
+    .tips-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+    .tip-card { overflow: hidden; border-radius: 20px; background: white; border: 1px solid var(--line); transition: transform .25s; }
+    .tip-card:hover { transform: translateY(-5px); }
+    .tip-card img { height: 165px; }
+    .tip-content { padding: 19px; }
+    .tip-number { color: var(--green); font-size: .76rem; font-weight: 800; letter-spacing: 1px; }
+    .tip-content h3 { margin-top: 5px; font: 800 1.04rem Manrope, sans-serif; line-height: 1.35; }
+    .tip-content p { margin-top: 8px; color: var(--muted); font-size: .86rem; }
+    .impact { display: grid; grid-template-columns: .9fr 1.1fr; gap: 50px; align-items: center; }
+    .impact-photo { height: 410px; overflow: hidden; border-radius: 30px; box-shadow: var(--shadow); }
+    .impact-photo img { height: 100%; }
+    .impact-content .section-title { max-width: 490px; }
+    .impact-content > p { color: var(--muted); margin-top: 17px; }
+    .impact-list { display: grid; gap: 15px; margin-top: 24px; }
+    .impact-item { display: flex; gap: 13px; align-items: flex-start; }
+    .impact-item i { display: grid; place-items: center; flex: 0 0 35px; height: 35px; border-radius: 11px; background: #e0f0dd; color: var(--green); margin-top: 2px; }
+    .impact-item strong { display: block; font-weight: 800; }
+    .impact-item span { display: block; color: var(--muted); font-size: .9rem; }
+    .cta-wrap { padding: 0 0 90px; }
+    .cta { position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 30px; padding: 52px 55px; border-radius: 30px; color: white; background: var(--green-dark); }
+    .cta::after { content: ""; position: absolute; width: 300px; height: 300px; right: 15%; top: -190px; border-radius: 50%; background: rgba(155,227,111,.13); }
+    .cta h2 { position: relative; z-index: 1; font: 800 clamp(1.7rem, 3vw, 2.5rem)/1.2 Manrope, sans-serif; letter-spacing: -1px; }
+    .cta p { position: relative; z-index: 1; max-width: 680px; margin-top: 12px; color: #d0e3d4; }
+    .cta .button { position: relative; z-index: 1; white-space: nowrap; background: var(--green-bright); color: var(--green-dark); }
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 45px; align-items: center; }
+    .about-mark { min-height: 280px; display: grid; place-items: center; border-radius: 28px; background: linear-gradient(135deg, #e3f3df, #c8e6c7); color: var(--green); }
+    .about-mark i { font-size: 7rem; filter: drop-shadow(0 14px 10px rgba(35,122,69,.12)); }
+    .about-copy p { margin-top: 15px; color: var(--muted); }
+    footer { padding: 52px 0 24px; background: #102d20; color: white; }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 40px; }
+    .footer-brand { color: white; }
+    .footer-copy { max-width: 340px; margin-top: 15px; color: #b6cdbd; font-size: .9rem; }
+    footer h3 { margin-bottom: 14px; font: 800 1rem Manrope, sans-serif; }
+    .footer-links { display: grid; gap: 8px; list-style: none; }
+    .footer-links a { color: #b6cdbd; text-decoration: none; font-size: .9rem; }
+    .footer-links a:hover { color: white; }
+    .copyright { margin-top: 38px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.13); color: #94b09f; text-align: center; font-size: .82rem; }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+    @media (max-width: 950px) {
+      .hero-grid { gap: 30px; }
+      .hero-art { min-height: 390px; }
+      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tips-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .impact { gap: 32px; }
+      .cta { padding: 42px; }
+    }
+    @media (max-width: 700px) {
+      .container { width: min(100% - 32px, 560px); }
+      .nav { min-height: 68px; }
+      .menu-btn { display: grid; place-items: center; }
+      .nav-cta { display: none; }
+      .nav-links { display: none; position: absolute; top: 68px; left: 0; right: 0; padding: 18px 22px 22px; background: #fbfdf9; border-bottom: 1px solid var(--line); box-shadow: 0 15px 25px rgba(24,65,41,.08); align-items: stretch; gap: 0; }
+      .nav-links.open { display: flex; flex-direction: column; }
+      .nav-links li a { display: block; padding: 11px 0; }
+      .hero { padding: 115px 0 65px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+      .hero h1 { letter-spacing: -1.8px; }
+      .hero-copy { font-size: 1rem; }
+      .hero-art { min-height: 330px; }
+      .hero-photo { inset: 12px 15px 18px; }
+      .floating-card { padding: 10px 12px; }
+      .floating-icon { width: 36px; height: 36px; }
+      .section { padding: 68px 0; }
+      .section-head { display: block; }
+      .section-aside { margin-top: 12px; }
+      .cards { grid-template-columns: 1fr; gap: 18px; }
+      .card-image { height: 220px; }
+      .tips-grid { gap: 13px; }
+      .tip-card img { height: 130px; }
+      .tip-content { padding: 15px; }
+      .tip-content h3 { font-size: .97rem; }
+      .tip-content p { font-size: .82rem; }
+      .impact, .about { grid-template-columns: 1fr; }
+      .impact-photo { height: 300px; }
+      .about-mark { min-height: 210px; }
+      .about-mark i { font-size: 5rem; }
+      .cta-wrap { padding-bottom: 68px; }
+      .cta { grid-template-columns: 1fr; padding: 31px 24px; border-radius: 23px; }
+      .cta .button { justify-self: start; white-space: normal; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px 20px; }
+      .footer-grid > div:first-child { grid-column: 1 / -1; }
+    }
+    @media (max-width: 390px) {
+      .tips-grid { grid-template-columns: 1fr; }
+      .tip-card { display: grid; grid-template-columns: 120px 1fr; }
+      .tip-card img { height: 100%; min-height: 150px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-grid > div:first-child { grid-column: auto; }
+      .hero-actions .button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav container" aria-label="Navigasi utama">
+      <a class="brand" href="#home"><span class="brand-mark"><i class="fa-solid fa-leaf"></i></span> EcoLearn</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Buka menu" aria-expanded="false" aria-controls="navLinks"><i class="fa-solid fa-bars"></i></button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Beranda</a></li><li><a href="#materi">Materi</a></li><li><a href="#tips">Tips Aksi</a></li><li><a href="#aksi">Kenapa Peduli?</a></li><li><a href="#tentang">Tentang</a></li>
+      </ul>
+      <a class="nav-cta" href="#materi">Mulai belajar <i class="fa-solid fa-arrow-right"></i></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <span class="eyebrow"><i class="fa-solid fa-seedling"></i> Belajar untuk masa depan yang lebih hijau</span>
+          <h1>Kenali Bumi.<br><span>Mulai Perubahan.</span></h1>
+          <p class="hero-copy">Temukan cara sederhana untuk memahami isu lingkungan, mengurangi sampah, menjaga sumber daya, dan membangun kebiasaan yang lebih ramah bumi.</p>
+          <div class="hero-actions">
+            <a class="button" href="#materi">Jelajahi materi <i class="fa-solid fa-arrow-right"></i></a>
+            <a class="button button-outline" href="#tips"><i class="fa-solid fa-seedling"></i> Lihat tips aksi</a>
+          </div>
+          <div class="hero-note"><div class="mini-leaves"><span><i class="fa-solid fa-leaf"></i></span><span><i class="fa-solid fa-droplet"></i></span><span><i class="fa-solid fa-sun"></i></span></div><span>Langkah kecil hari ini, dampak baik untuk esok.</span></div>
+        </div>
+        <div class="hero-art">
+          <div class="floating-card top"><span class="floating-icon"><i class="fa-solid fa-earth-asia"></i></span><div><strong>Satu bumi</strong><small>Tanggung jawab bersama</small></div></div>
+          <div class="hero-photo">
+            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=85" alt="Cahaya matahari menembus hutan hijau" fetchpriority="high">
+            <div class="photo-overlay"></div><div class="photo-label"><strong>Alam adalah rumah kita.</strong><span>Kenali, rawat, dan jaga bersama.</span></div>
+          </div>
+          <div class="floating-card bottom"><span class="floating-icon"><i class="fa-solid fa-recycle"></i></span><div><strong>Mulai dari diri sendiri</strong><small>Kebiasaan kecil berarti</small></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="materi">
+      <div class="container">
+        <div class="section-head">
+          <div><span class="section-kicker">Pusat edukasi</span><h2 class="section-title">Kenali isu lingkungan</h2><p class="section-desc">Materi ringkas untuk membantumu memahami tantangan lingkungan dan pilihan yang bisa dilakukan sehari-hari.</p></div>
+          <p class="section-aside">Geser rasa ingin tahu menjadi aksi nyata. Mulai dari topik yang paling menarik buatmu.</p>
+        </div>
+        <div class="cards">
+          <article class="card reveal">
+            <div class="card-image"><img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=900&q=80" alt="Tempat sampah daur ulang berwarna" loading="lazy"><span class="card-tag">01 · Sampah</span></div>
+            <div class="card-body"><h3>Pengelolaan Sampah</h3><p>Kenali cara memilah sampah, mengurangi barang sekali pakai, menggunakan kembali barang, dan mendaur ulang dengan benar.</p><a class="card-link" href="#tips">Mulai dari kebiasaan <i class="fa-solid fa-arrow-right"></i></a></div>
+          </article>
+          <article class="card reveal">
+            <div class="card-image"><img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=900&q=80" alt="Panel surya menyerap cahaya matahari" loading="lazy"><span class="card-tag">02 · Energi</span></div>
+            <div class="card-body"><h3>Energi Terbarukan</h3><p>Pelajari energi matahari, angin, dan air sebagai sumber energi yang dapat diperbarui serta perannya dalam transisi energi.</p><a class="card-link" href="#tips">Lihat aksi hemat energi <i class="fa-solid fa-arrow-right"></i></a></div>
+          </article>
+          <article class="card reveal">
+            <div class="card-image"><img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?auto=format&fit=crop&w=900&q=80" alt="Asap polusi di udara perkotaan" loading="lazy"><span class="card-tag">03 · Iklim</span></div>
+            <div class="card-body"><h3>Perubahan Iklim</h3><p>Pahami hubungan gas rumah kaca, penggunaan energi, perubahan cuaca jangka panjang, dan dampaknya bagi kehidupan.</p><a class="card-link" href="#aksi">Pahami dampaknya <i class="fa-solid fa-arrow-right"></i></a></div>
+          </article>
+          <article class="card reveal">
+            <div class="card-image"><img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80" alt="Pepohonan tinggi di hutan yang rimbun" loading="lazy"><span class="card-tag">04 · Keanekaragaman</span></div>
+            <div class="card-body"><h3>Pelestarian Alam</h3><p>Ketahui mengapa hutan, laut, hewan, tumbuhan, dan habitat alami penting untuk keseimbangan ekosistem.</p><a class="card-link" href="#tips">Rawat lingkungan <i class="fa-solid fa-arrow-right"></i></a></div>
+          </article>
+          <article class="card reveal">
+            <div class="card-image"><img src="https://images.unsplash.com/photo-1437482078695-73f5ca6c96e2?auto=format&fit=crop&w=900&q=80" alt="Air bersih mengalir di alam" loading="lazy"><span class="card-tag">05 · Air</span></div>
+            <div class="card-body"><h3>Menjaga Air Bersih</h3><p>Air bersih sangat berharga. Pelajari cara menghemat air, menjaga sungai, dan mencegah pencemaran sumber air.</p><a class="card-link" href="#tips">Hemat air mulai sekarang <i class="fa-solid fa-arrow-right"></i></a></div>
+          </article>
+          <article class="card reveal">
+            <div class="card-image"><img src="https://images.unsplash.com/photo-1473341304170-971on7e9c1e?auto=format&fit=crop&w=900&q=80" alt="Lampu menyala sebagai simbol penggunaan listrik" loading="lazy"><span class="card-tag">06 · Energi</span></div>
+            <div class="card-body"><h3>Hemat Energi</h3><p>Biasakan memakai listrik seperlunya, mematikan perangkat yang tidak digunakan, dan memanfaatkan cahaya alami.</p><a class="card-link" href="#tips">Coba tips sederhana <i class="fa-solid fa-arrow-right"></i></a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="tips">
+      <div class="container">
+        <div class="section-head">
+          <div><span class="section-kicker">Aksi sehari-hari</span><h2 class="section-title">Kebiasaan kecil, arti besar</h2><p class="section-desc">Kamu tidak harus melakukan semuanya sekaligus. Pilih satu kebiasaan, lakukan secara konsisten, lalu ajak orang lain.</p></div>
+        </div>
+        <div class="tips-grid">
+          <article class="tip-card reveal"><img src="https://images.unsplash.com/photo-1605600659873-d808a13e4d9a?auto=format&fit=crop&w=700&q=80" alt="Botol minum yang dapat dipakai berulang kali" loading="lazy"><div class="tip-content"><span class="tip-number">AKSI 01</span><h3>Kurangi plastik sekali pakai</h3><p>Bawa botol minum dan tas belanja pakai ulang saat bepergian.</p></div></article>
+          <article class="tip-card reveal"><img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=700&q=80" alt="Lampu hemat energi di ruangan" loading="lazy"><div class="tip-content"><span class="tip-number">AKSI 02</span><h3>Gunakan listrik seperlunya</h3><p>Matikan lampu dan perangkat saat tidak digunakan.</p></div></article>
+          <article class="tip-card reveal"><img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=700&q=80" alt="Sepeda untuk transportasi ramah lingkungan" loading="lazy"><div class="tip-content"><span class="tip-number">AKSI 03</span><h3>Pilih transportasi ramah lingkungan</h3><p>Berjalan kaki, bersepeda, atau gunakan transportasi umum jika memungkinkan.</p></div></article>
+          <article class="tip-card reveal"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=700&q=80" alt="Tangan merawat tanaman kecil di pot" loading="lazy"><div class="tip-content"><span class="tip-number">AKSI 04</span><h3>Rawat tanaman</h3><p>Tanam dan rawat tanaman yang sesuai dengan tempat tinggalmu.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="aksi">
+      <div class="container impact">
+        <div class="impact-photo reveal"><img src="https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1100&q=85" alt="Satwa liar hidup di habitat alam" loading="lazy"></div>
+        <div class="impact-content reveal">
+          <span class="section-kicker">Kenapa harus peduli?</span><h2 class="section-title">Bumi adalah rumah bersama.</h2>
+          <p>Lingkungan yang sehat mendukung kehidupan manusia, hewan, dan tumbuhan. Setiap pilihan yang lebih bijak dapat membantu mengurangi tekanan terhadap alam.</p>
+          <div class="impact-list">
+            <div class="impact-item"><i class="fa-solid fa-recycle"></i><div><strong>Terapkan prinsip 3R</strong><span>Reduce, Reuse, Recycle — kurangi, gunakan kembali, dan daur ulang.</span></div></div>
+            <div class="impact-item"><i class="fa-solid fa-droplet"></i><div><strong>Jaga sumber daya</strong><span>Gunakan air dan energi seperlunya agar tidak terbuang sia-sia.</span></div></div>
+            <div class="impact-item"><i class="fa-solid fa-people-group"></i><div><strong>Ajak bergerak bersama</strong><span>Bagikan kebiasaan baik dan ikut menjaga kebersihan lingkungan sekitar.</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-wrap">
+      <div class="container">
+        <div class="cta reveal"><div><h2>Yuk, mulai perubahan dari sekarang.</h2><p>Pilih satu aksi ramah lingkungan hari ini. Hal sederhana yang dilakukan bersama bisa menjadi awal perubahan yang lebih baik.</p></div><a class="button" href="#tips">Pilih aksi pertamamu <i class="fa-solid fa-arrow-right"></i></a></div>
+      </div>
+    </section>
+
+    <section class="section" id="tentang">
+      <div class="container about">
+        <div class="about-mark reveal"><i class="fa-solid fa-seedling"></i></div>
+        <div class="about-copy reveal"><span class="section-kicker">Tentang EcoLearn</span><h2 class="section-title">Belajar untuk bumi, satu langkah setiap hari.</h2><p>EcoLearn adalah website edukasi lingkungan yang membantu pelajar mengenal isu-isu lingkungan dan menemukan tindakan sederhana yang bisa diterapkan di rumah, sekolah, maupun lingkungan sekitar.</p><p>Tujuan kami sederhana: membuat informasi lingkungan lebih mudah dipahami dan mendorong kebiasaan positif yang berkelanjutan.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div><a class="brand footer-brand" href="#home"><span class="brand-mark"><i class="fa-solid fa-leaf"></i></span> EcoLearn</a><p class="footer-copy">Belajar dan peduli lingkungan melalui pengetahuan, pilihan bijak, dan aksi sehari-hari.</p></div>
+        <div><h3>Jelajahi</h3><ul class="footer-links"><li><a href="#home">Beranda</a></li><li><a href="#materi">Materi edukasi</a></li><li><a href="#tips">Tips aksi</a></li><li><a href="#tentang">Tentang EcoLearn</a></li></ul></div>
+        <div><h3>Mulai dari sini</h3><ul class="footer-links"><li><a href="#tips">Kurangi plastik</a></li><li><a href="#tips">Hemat energi</a></li><li><a href="#tips">Transportasi ramah lingkungan</a></li><li><a href="#tips">Rawat tanaman</a></li></ul></div>
+      </div>
+      <div class="copyright">© 2026 EcoLearn · Belajar dan Peduli Lingkungan.</div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    menuBtn.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", String(isOpen));
+      menuBtn.setAttribute("aria-label", isOpen ? "Tutup menu" : "Buka menu");
+      menuBtn.innerHTML = isOpen
+        ? '<i class="fa-solid fa-xmark"></i>'
+        : '<i class="fa-solid fa-bars"></i>';
+    });
+
+    document.querySelectorAll(".nav-links a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.setAttribute("aria-label", "Buka menu");
+        menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      });
+    });
+
+    const revealElements = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      revealElements.forEach(element => observer.observe(element));
+    } else {
+      revealElements.forEach(element => element.classList.add("visible"));
+    }
+  </script>
+</body>
+</html>
